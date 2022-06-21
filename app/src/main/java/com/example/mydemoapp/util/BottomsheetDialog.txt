@@ -1,0 +1,32 @@
+private fun showFilterBottomSheet() {
+        if (filterBottomDialog == null) {
+            filterBottomDialog = BottomSheetDialog(this)
+        }
+        if (filterBottomBinding == null) {
+            filterBottomBinding =
+                BottomSheetDashboardFilterBinding.inflate(LayoutInflater.from(this))
+        }
+        filterBottomDialog?.setContentView(filterBottomBinding?.root as View)
+        filterBottomDialog?.setCancelable(true)
+
+        (filterBottomBinding?.root?.parent as View).setBackgroundColor(
+            ContextCompat.getColor(
+                this,
+                android.R.color.transparent
+            )
+        )
+        val mBehavior: BottomSheetBehavior<*> =
+            BottomSheetBehavior.from(filterBottomBinding?.root?.parent as View)
+
+        filterBottomDialog?.setOnShowListener { dialog: DialogInterface ->
+            val d = dialog as BottomSheetDialog
+            val bottomSheet =
+                d.findViewById<LinearLayout>(R.id.bottomialog) as LinearLayout
+            BottomSheetBehavior.from(bottomSheet).state = BottomSheetBehavior.STATE_EXPANDED
+            mBehavior.setPeekHeight(filterBottomBinding?.root?.height as Int)
+        }
+
+        initFilterBottomBinding()
+
+        filterBottomDialog?.show()
+    }
